@@ -27,3 +27,32 @@ next we need to Build the package
 1) `sudo sh ./configure`
 2) `sudo make`
 3) `sudo make install`
+
+### create tinc config files
+
+First create the tinc directories
+
+* `sudo mkdir -p /usr/local/tinc/lgbenet/hosts/`
+
+Next, Start with the `tinc.config` file
+
+First change to the directory
+* `cd /` (get back to root)
+* `cd /usr/local/tinc/lgbenet/`
+
+ Then open `tinc.conf` we will use nano but you can use your editor of choice
+ 
+ * `sudo nano tinc.conf`
+ 
+on the base node (the one we want to use a a server) paste
+
+> Name = lgbe01
+> Device = /dev/net/tun
+> AddressFamily = ipv4
+
+on all other nodes the file should look like this *(the addition is in **bold** text)*
+
+> Name = lgbe02 
+> Device = /dev/net/tun
+> AddressFamily = ipv4
+> **ConnectTo = lgbe01** 
