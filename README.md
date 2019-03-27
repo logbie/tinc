@@ -46,13 +46,14 @@ First change to the directory
  
 on the base node (the one we want to use a a server) paste
 
-> Name = lgbe01
-> Device = /dev/net/tun
-> AddressFamily = ipv4
+> Name = lgbe01  
+> Device = /dev/net/tun  
+> AddressFamily = ipv4  
 
 on all other nodes the file should look like this *(the addition is in **bold** text)*
 
-> Name = lgbe02 
-> Device = /dev/net/tun
-> AddressFamily = ipv4
-> **ConnectTo = lgbe01** 
+> Name = lgbe02  
+> Device = /dev/net/tun  
+> AddressFamily = ipv4  
+> **ConnectTo = lgbe01**  
+
