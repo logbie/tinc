@@ -26,13 +26,15 @@ next we need to Build the package
 
 1) `sudo sh ./configure`
 2) `sudo make`
-3) `sudo make install`
+3) `autoreconf -f -i` (only if there is an error while running make)
+4) `sudo make install`
 
 ### create tinc config files
 
 First create the tinc directories
 
-* `sudo mkdir -p /usr/local/tinc/lgbenet/hosts/`
+* `sudo mkdir -p /usr/local/etc/tinc/lgbenet/hosts/`
+* `sudo mkdir -p /usr/local/var/run/`
 
 Next, Start with the `tinc.config` file
 
@@ -55,5 +57,64 @@ on all other nodes the file should look like this *(the addition is in **bold** 
 > Name = lgbe02  
 > Device = /dev/net/tun  
 > AddressFamily = ipv4  
-> **ConnectTo = lgbe01**  
+> **ConnectTo = lgbe01**
+
+For every node we want we need two things a  keypair and a hosts file
+
+to make a keypair type in the command
+
+`sudo tincd -n lgbenet -K 4096` (where `lgbenet` is the network name)
+
+secondly, the hosts file stored under the /hosts directory in your root tinc network folder
+it should contain.
+
+> Address = Your physical ip address  
+> Subnet = Your virtual ip address 
+
+### create the public/private keypair
+
+`sudo tincd -n lgbenet -K 4096`
+
+if you have followed the above directions this should automatically  
+append the public key to your hosts file,
+
+
+### create tinc-up/down files
+
+Create the tinc-up file
+
+>\#!/bin/sh
+>ip link set $INTERFACE up  
+>ip addr add <virtual ip address) dev $INTERFACE  
+>ip route add <Cider netmask> dev $INTERFACE  
+
+Next, Create a tinc-down file
+
+>\#!/bin/sh  
+>ip route del 192.168.100.0/24 dev $INTERFACE  
+>ip addr del 192.168.100.209 dev $INTERFACE  
+>ip link set $INTERFACE down  
+ 
+ ### create services file
+ 
+>  [Unit]  
+>  Description=Tinc net linodeVPN  
+>  After=network.target  
+>  
+>  [Service]  
+>  Type=simple  
+>  WorkingDirectory=**/usr/local/etc/tinc/*lgbenet***  
+>  ExecStart=**/usr/local/sbin/tincd -n *lgbenet* -D -d3**  
+>  ExecReload=**/usr/local/sbin/tincd -n *lgbenet* -kHUP**  
+>  TimeoutStopSec=5  
+>  Restart=always  
+>  RestartSec=60  
+>  
+>  [Install]  
+>  WantedBy=multi-user.target  
+
+enable the service to start when linux boots
+
+`sudo systemctl enable tinc.service`
+
 
