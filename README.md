@@ -3,7 +3,7 @@ Logbie tinc
 ***
 First we need to install the prereqs to build the tinc pakage.
 ### ubuntu
-`sudo apt install build-essential automake libssl-dev liblzo2-dev libbz2-dev zlib1g-dev git`
+`sudo apt install build-essential automake libssl-dev liblzo2-dev libbz2-dev zlib1g-dev git texinfo`
 
 Next, create a `tinc` user and give them sudo ablity
 
