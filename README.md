@@ -83,10 +83,10 @@ append the public key to your hosts file,
 
 Create the tinc-up file
 
->\#!/bin/sh
+>#!/bin/sh  
 >ip link set $INTERFACE up  
->ip addr add <virtual ip address) dev $INTERFACE  
->ip route add <Cider netmask> dev $INTERFACE  
+>ip addr add 192.168.100.209 dev $INTERFACE  
+>ip route add 192.168.100.0/24 dev $INTERFACE  
 
 Next, Create a tinc-down file
 
