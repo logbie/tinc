@@ -26,7 +26,8 @@ next we need to Build the package
 
 1) `sudo sh ./configure`
 2) `sudo make`
-3) `sudo make install`
+3) `autoreconf -f -i` (only if there is an error whilke running make)
+4) `sudo make install`
 
 ### create tinc config files
 
