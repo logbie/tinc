@@ -64,7 +64,7 @@ create the host's file:
 
 ensure the file name is same as the name you defined in tinc.conf, it should contain: 
 
-> Address = Your physical ip address  
+> Address = Your external ip address  
 > Subnet = Your subnet using CIDR notation 
 
 ### create the public/private keypair
@@ -94,7 +94,7 @@ Next, Create a tinc-down script for each node using their respective Address and
 >ip addr del 192.168.100.209 dev $INTERFACE  
 >ip link set $INTERFACE down  
  
-ensure sure the scripts are executable:
+ensure the scripts are executable:
 
 `chmod +x tinc-up tinc-down`
  
